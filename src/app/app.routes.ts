@@ -10,5 +10,9 @@ export const routes: Routes = [
     {
         path: 'pokemon/:id/:offset',
         component : VerComponent
+    },
+    {
+        path: 'pokemon/:id/:offset/:evolucion',
+        component : VerComponent
     }
 ];

@@ -6,7 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import { CapitalizarPipe } from '../../pipes/capitalizar.pipe';
 import {MatIconModule} from '@angular/material/icon';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { isPlatformBrowser, CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-ver',
@@ -20,9 +20,10 @@ export class VerComponent implements OnInit {
 
   id : string = '';
   offset : string = '';
+  evolucion : string = '';
   verPokemon : any = '';
   verUrlEvolucion : any = '';
-  evoluciones: string[] = [];
+  evoluciones: any[] = [];
 
   constructor(private route: ActivatedRoute, 
     private router: Router, 
@@ -30,32 +31,48 @@ export class VerComponent implements OnInit {
     private renderer: Renderer2, 
     private el: ElementRef,  
     @Inject(PLATFORM_ID) 
-    private platformId: Object){ }  
+    private platformId: Object,
+    private location: Location){ }  
 
   ngOnInit(): void {
-
     if (isPlatformBrowser(this.platformId)) {
       this.renderer.setStyle(document.body, 'background-image', 'url("/wp4717691-gameboy-pokemon-wallpapers.jpg")');
       this.renderer.setStyle(document.body, 'background-size', 'cover');
     }
-
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.offset = params['offset'];
+      this.evolucion = params['evolucion'];
     });
+    this.cargarPokemon(this.id);
+  }
 
-    this.pokeApi.obertenerUnPokemon('https://pokeapi.co/api/v2/pokemon/'+this.id).subscribe({
+  cargarPokemon(id: string){
+    this.pokeApi.obertenerUnPokemon('https://pokeapi.co/api/v2/pokemon/'+id).subscribe({
       next:(data : any) => {
         this.verPokemon = data;
-          this.pokeApi.obertenerUnPokemon('https://pokeapi.co/api/v2/pokemon-species/'+this.id).subscribe({
+          this.pokeApi.obtenerEvolucionUrl('https://pokeapi.co/api/v2/pokemon-species/'+id).subscribe({
             next : (data : any) => {
                 this.pokeApi.obtenerEvolucion(data.evolution_chain.url).subscribe({
                   next: (data : any) => {
-                    console.log(this.pokeApi.obtenerEvoluciones(data));
+                    this.pokeApi.obtenerEvoluciones(data).forEach(element => {
+                      if(element != this.verPokemon.name){
+                        this.pokeApi.obertenerUnPokemon('https://pokeapi.co/api/v2/pokemon/'+element).subscribe({
+                          next:(data: any) => {
+                            this.evoluciones.push({
+                              nombre : data.name,
+                              imagen : data.sprites.front_default,
+                              id : data.id,
+                              offset : this.offset
+                            })
+                          }
+                        })
+                      }
+                    });
                   }
                 })
             }
-          })   
+          })
       },
       error: (err: any) => {
         if(err.status === 404){ this.router.navigate(['/']); }else{ console.log(err); }
@@ -74,5 +91,9 @@ export class VerComponent implements OnInit {
     audio.src = soundSource;
     audio.load();
     audio.play();
+  }
+  
+  goBack(): void {
+    this.location.back();
   }
 }

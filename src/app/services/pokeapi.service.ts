@@ -17,6 +17,10 @@ export class PokeapiService {
     return this.http.get(url);
   }
 
+  obtenerEvolucionUrl(url: string){
+    return this.http.get(url);
+  }
+
   obtenerEvolucion(url: string){
     return this.http.get(url);
   }

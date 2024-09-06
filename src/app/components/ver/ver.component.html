@@ -24,6 +24,14 @@
             <p>
                 Altura: {{(verPokemon.height / 10) | number:'1.1-1'}} m | Peso: {{(verPokemon.weight / 10) | number:'1.1-1'}} kg
             </p>
+            Evoluciones: <br />
+            <div style="display: flex; justify-content: center;">
+                <div style="text-align: center;">                
+                    @for (pokemon of evoluciones; track $index){
+                        <a href="/pokemon/{{pokemon.id}}/{{pokemon.offset}}/evolucion" title="{{pokemon.nombre | capitalizar}}"><img src="{{pokemon.imagen}}"></a>
+                    }
+                </div>
+            </div>
         </mat-card-content>
         <mat-card-actions>
             <button mat-fab extended (click)="playSound(verPokemon.cries.latest)">
@@ -31,7 +39,11 @@
                 Sonido
             </button>            
         </mat-card-actions>
-        <a href="/?offset={{offset}}" class="fixRegresar"><< Regresar</a>
+        @if (evolucion === 'evolucion') {
+            <a href="#" (click)="goBack()" class="fixRegresar"><< Regresar</a>
+        } @else{
+            <a href="/?offset={{offset}}" class="fixRegresar"><< Regresar</a>
+        }
     </mat-card> 
 </div>
 }
