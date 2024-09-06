@@ -7,9 +7,9 @@
         </mat-card-header>   
         <mat-card-content>
             @if(verPokemon.sprites.other.dream_world.front_default){
-                <img [src]="verPokemon.sprites.other.dream_world.front_default">
+                <img [src]="verPokemon.sprites.other.dream_world.front_default" class="fixThumb">
             } @else {
-                <img [src]="verPokemon.sprites.other.home.front_default">
+                <img [src]="verPokemon.sprites.other.home.front_default" class="fixThumb">
             }
             <p>
                 Tipo: <br />
