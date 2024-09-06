@@ -1,0 +1,78 @@
+#granja {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 5px;    
+}  
+.pokemon {
+    background: rgb(221, 221, 221);
+    color: rgb(0, 0, 0);
+    padding: 1em;
+    text-align: center;
+    border-radius: 15px 50px 30px;
+}
+.pokemon img{
+    width: 100%;
+    max-height: 200px;
+}
+.mat-mdc-card-subtitle{
+    background: #ff6c00;
+    border-radius: 15px 50px 30px;
+}
+.mat-mdc-card-actions{
+    justify-content: center;
+}
+.tipo{
+    font-size: 10pt;
+    background: #1a0101;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    word-break: keep-all;
+}
+.habilidad{
+    font-size: 10pt;
+    background: #6a145d;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    word-break: keep-all;
+}
+h1 a.fixEnlace{
+    color: red;
+    text-decoration: none;
+}
+h1 a.fixEnlace:hover{
+    color: black;
+}
+#paginador{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+#paginador h6{
+    font-size: 14pt;
+    font-weight: 400;
+}
+#paginador #estilosPaginador{
+    text-align: center;
+    background: #ff6c00;
+    width: 250px;
+    padding: 15px;
+    font-weight:500;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+#paginador #estilosPaginador a{
+    color: white;
+    text-decoration: none;    
+    border-radius: 10px;
+    background: #f83403;
+    padding: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+#paginador #estilosPaginador a:hover{
+    background: #ffd900;
+    border-radius: 10px;
+    color: black;
+}

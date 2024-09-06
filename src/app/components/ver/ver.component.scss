@@ -1,0 +1,54 @@
+#granja{
+    display: flex;
+    justify-content: center;
+}
+.mat-mdc-card-subtitle{
+    background: #ff6c00;
+    border-radius: 15px 50px 30px;
+    padding-left: 5px;
+}
+.mat-mdc-card-outlined{    
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white !important;    
+}
+.mat-mdc-card-subtitle{
+    color: white !important;    
+}
+.mat-mdc-card-content{
+    text-align: center;
+}
+.mat-mdc-card-actions{
+    justify-content: center;
+}
+a{
+    color: white;
+    text-decoration: none;
+    
+}
+.tipo{
+    font-size: 11pt;
+    background: #1a0101;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    word-break: keep-all;
+}
+.habilidad{
+    font-size: 11pt;
+    background: #6a145d;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    word-break: keep-all;
+}
+a.fixRegresar{
+    color: white;
+    background: #29b40e;
+    border-radius: 15px 50px 30px;
+    width: 120px;
+    margin: 10px;
+    text-align: center;
+}
+a.fixRegresar:hover{
+    background-color: #ff6c00;
+}

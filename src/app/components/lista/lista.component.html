@@ -1,0 +1,52 @@
+<h1><a href="/" class="fixEnlace">Pokedex</a></h1>
+@if (pokemonesCompletos) {
+    <div id="granja">
+        @for (item of pokemonesCompletos; track item.id){
+        <mat-card class="pokemon" appearance="outlined">
+            <mat-card-header>            
+                <mat-card-subtitle>#{{item.id}}</mat-card-subtitle>
+                <mat-card-title>{{item.name | capitalizar}}</mat-card-title>
+                            
+            </mat-card-header>   
+            <mat-card-content>                
+                <a routerLink="pokemon/{{item.id}}/{{offset}}"><img [src]="item.sprites.other.dream_world.front_default"></a>
+                <!--<a href="pokemon/{{item.id}}/{{offset}}"><img [src]="item.sprites.other.dream_world.front_default"></a>-->
+                <p>
+                    Tipo: <br />
+                    @for (tipo of item.types; track $index){
+                        <span class="tipo">{{tipo.type.name | capitalizar}}</span>
+                        &nbsp;
+                    }
+                </p> 
+                <p>
+                    Habilidades: <br />
+                    @for (habilidad of item.abilities; track $index){
+                        <span class="habilidad">{{habilidad.ability.name | capitalizar}}</span>
+                        &nbsp;
+                    }
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-fab extended (click)="playSound(item.cries.latest)">
+                    <mat-icon>volume_up</mat-icon>
+                    Sonido
+                </button>
+            </mat-card-actions>
+        </mat-card> 
+        }    
+    </div>
+}
+
+<div id="paginador">
+    <div id="estilosPaginador">
+        <h6>Paginador</h6>
+        @if (listadoSiguiente > 20) { 
+            <!--<a [href]="listadoAnterior" (click)="anteriorPokemones($event)">Anterior</a> -->
+            <a href="/?offset={{listadoAnterior}}">Anterior</a>
+        }
+        @if (listadoSiguiente) { 
+            <!--<a [href]="listadoSiguiente" (click)="siguientePokemones($event)">Siguiente</a> -->
+            <a href="/?offset={{listadoSiguiente}}">Siguiente</a>
+        }
+    </div>
+</div>
