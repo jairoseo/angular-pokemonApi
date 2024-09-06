@@ -44,12 +44,10 @@
 <div id="paginador">
     <div id="estilosPaginador">
         <h6>Paginador</h6>
-        @if (listadoSiguiente > 20) { 
-            <!--<a [href]="listadoAnterior" (click)="anteriorPokemones($event)">Anterior</a> -->
+        @if (listadoSiguiente > 20 || offset === '1282') { 
             <a href="/?offset={{listadoAnterior}}">Anterior</a>
         }
         @if (listadoSiguiente) { 
-            <!--<a [href]="listadoSiguiente" (click)="siguientePokemones($event)">Siguiente</a> -->
             <a href="/?offset={{listadoSiguiente}}">Siguiente</a>
         }
     </div>
