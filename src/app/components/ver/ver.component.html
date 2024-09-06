@@ -6,7 +6,11 @@
             <mat-card-title>{{verPokemon.name | capitalizar}}</mat-card-title>                        
         </mat-card-header>   
         <mat-card-content>
-            <img [src]="verPokemon.sprites.other.dream_world.front_default">
+            @if(verPokemon.sprites.other.dream_world.front_default){
+                <img [src]="verPokemon.sprites.other.dream_world.front_default">
+            } @else {
+                <img [src]="verPokemon.sprites.other.home.front_default">
+            }
             <p>
                 Tipo: <br />
                 @for (tipo of verPokemon.types; track $index){

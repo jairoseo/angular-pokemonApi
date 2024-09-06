@@ -8,7 +8,13 @@
                 <mat-card-title>{{item.name | capitalizar}}</mat-card-title>                            
             </mat-card-header>   
             <mat-card-content>                
-                <a href="pokemon/{{item.id}}/{{offset}}"><img [src]="item.sprites.other.dream_world.front_default"></a>
+                <a href="pokemon/{{item.id}}/{{offset}}">
+                    @if(item.sprites.other.dream_world.front_default){
+                        <img [src]="item.sprites.other.dream_world.front_default">
+                    } @else {
+                        <img [src]="item.sprites.other.home.front_default">
+                    }
+                </a>
                 <p>
                     Tipo: <br />
                     @for (tipo of item.types; track $index){
