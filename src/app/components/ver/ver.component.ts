@@ -47,38 +47,36 @@ export class VerComponent implements OnInit {
     this.cargarPokemon(this.id);
   }
 
-  cargarPokemon(id: string){
-    this.pokeApi.obertenerUnPokemon('https://pokeapi.co/api/v2/pokemon/'+id).subscribe({
-      next:(data : any) => {
-        this.verPokemon = data;
-          this.pokeApi.obtenerEvolucionUrl('https://pokeapi.co/api/v2/pokemon-species/'+id).subscribe({
-            next : (data : any) => {
-                this.pokeApi.obtenerEvolucion(data.evolution_chain.url).subscribe({
-                  next: (data : any) => {
-                    this.pokeApi.obtenerEvoluciones(data).forEach(element => {
-                      if(element != this.verPokemon.name){
-                        this.pokeApi.obertenerUnPokemon('https://pokeapi.co/api/v2/pokemon/'+element).subscribe({
-                          next:(data: any) => {
-                            this.evoluciones.push({
-                              nombre : data.name,
-                              imagen : data.sprites.front_default,
-                              id : data.id,
-                              offset : this.offset
-                            })
-                          }
-                        })
-                      }
-                    });
-                  }
-                })
-            }
-          })
-      },
-      error: (err: any) => {
-        if(err.status === 404){ this.router.navigate(['/']); }else{ console.log(err); }
+  async cargarPokemon(id: string) {
+    try {
+      const pokemon: any = await this.pokeApi.obertenerUnPokemon(`https://pokeapi.co/api/v2/pokemon/${id}`).toPromise();
+      this.verPokemon = pokemon;
+  
+      const speciesData: any = await this.pokeApi.obtenerEvolucionUrl(`https://pokeapi.co/api/v2/pokemon-species/${id}`).toPromise();
+      const evolutionChainData: any = await this.pokeApi.obtenerEvolucion(speciesData.evolution_chain.url).toPromise();
+      
+      const evoluciones: any = this.pokeApi.obtenerEvoluciones(evolutionChainData);
+      
+      for (const element of evoluciones) {
+        if (element !== this.verPokemon.name) {
+          const evolucionPokemon: any = await this.pokeApi.obertenerUnPokemon(`https://pokeapi.co/api/v2/pokemon/${element}`).toPromise();
+          this.evoluciones.push({
+            nombre: evolucionPokemon.name,
+            imagen: evolucionPokemon.sprites.front_default,
+            id: evolucionPokemon.id,
+            offset: this.offset
+          });
+        }
       }
-    })
+    } catch (err: any) {
+      if (err.status === 404) {
+        this.router.navigate(['/']);
+      } else {
+        console.error(err);
+      }
+    }
   }
+  
 
   ngOnDestroy() {
     if (isPlatformBrowser(this.platformId)) {
@@ -92,7 +90,7 @@ export class VerComponent implements OnInit {
     audio.load();
     audio.play();
   }
-  
+    
   goBack(): void {
     this.location.back();
   }
