@@ -55,7 +55,7 @@ firebase-debug.*.log*
 
 # Firebase config
 .firebaserc
-.firebase.json
+firebase.json
 
 # Runtime data
 pids
